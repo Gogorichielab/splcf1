@@ -3,6 +3,11 @@
 Guidance for AI agents (Claude, Codex, Copilot, Cursor, etc.) and humans working in
 this repository. Read this file before writing, editing, or reviewing anything here.
 
+For current Foundation institutional facts — including Board membership, contact
+information, and the standard board-meeting agenda/minutes format — also read
+[`assets/guidance.md`](assets/guidance.md) and treat it as the concise reference
+for recurring Foundation information.
+
 ---
 
 ## Project overview

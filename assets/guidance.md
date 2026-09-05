@@ -28,9 +28,7 @@ Board names and roles above are based on the current Foundation website content 
 
 ## Foundation / Church Contact Information
 
-The Foundation is associated with St. Peter Lutheran Church in Pingree Grove, Illinois.
-
-- **Church / Foundation mailing location:** St. Peter Lutheran Church, 14N205 Reinking Road, Pingree Grove, IL 60140
+- **Church / Foundation address:** St. Peter Lutheran Church, 985 Galligan Road, Gilberts, IL 60136
 - **Church phone:** (847) 464-5440
 - **Foundation website:** the Foundation website published from this repository via GitHub Pages; confirm the current public custom domain/URL before placing it in official printed material.
 
