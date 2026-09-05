@@ -5,6 +5,11 @@ Instructions for Claude Code working in this repository.
 > **Read [`AGENTS.md`](AGENTS.md) first.** It is the authoritative project brief and
 > is kept tool-agnostic. This file adds the Claude-specific bits and repeats only
 > the rules that are easy to get wrong.
+>
+> For current Foundation institutional facts — including Board membership,
+> contact information, and standard board-meeting agenda/minutes guidance — read
+> [`assets/guidance.md`](assets/guidance.md) before drafting Foundation records or
+> donor-facing materials that depend on those facts.
 
 ---
 
