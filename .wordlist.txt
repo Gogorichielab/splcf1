@@ -3,6 +3,9 @@ biblically
 bundler
 copywriting
 coreyhaines
+CRATs
+CRUTs
+DAFs
 DietrichGebert
 disfluencies
 Galligan
@@ -41,3 +44,5 @@ St
 stpeterlutheran
 Undesignated
 undesignated
+unitrust
+USD
