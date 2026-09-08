@@ -43,7 +43,8 @@ jobs:
           tar --no-same-owner -xzf actionlint.tar.gz actionlint
 
       - name: Validate workflow syntax
-        run: "$RUNNER_TEMP/actionlint" -shellcheck= -pyflakes= .github/workflows/static.yml
+        run: |
+          "$RUNNER_TEMP/actionlint" -shellcheck= -pyflakes= .github/workflows/static.yml
 
       - name: Spellcheck content
         uses: rojopolis/spellcheck-github-actions@c1934c57e61c734261d7905b525486b12f8eb670 # 0.66.0
