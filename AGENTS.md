@@ -22,8 +22,15 @@ planned gifts), and publish the Foundation's governing documents.
 - **Product shape:** a static site. No build step, no framework, no backend, no
   database, no analytics pipeline.
 - **Hosting:** GitHub Pages, deployed by `.github/workflows/static.yml` on every
-  push to `main`. The workflow uploads the whole repository root as the Pages
-  artifact, so file paths in the repo are the URLs on the live site.
+  push to `main`. The workflow stages the public site into `_site`, verifies its
+  local HTML links/assets, uploads that directory as the Pages artifact, and
+  deploys only after the required checks pass. Pull requests run read-only checks
+  and do not receive Pages write credentials.
+- **Pages workflow source:** adapted from the Gogorichielab organization Pages
+  template at commit `6599d2688f322bb63a01452e032777d7c0bf6eb9`. Repository-specific
+  adaptations preserve the `Spellcheck` check and `.spellcheck.yml`, stage this
+  repository's explicit public files, validate local links, and keep deployment
+  gated to the default branch and the `github-pages` environment.
 
 ### Repo layout
 
@@ -32,11 +39,19 @@ planned gifts), and publish the Foundation's governing documents.
 ├── index.html                     ← The entire site (inline CSS, hand-authored)
 ├── Gift Acceptance Policy.dc.html ← Published policy document page
 ├── support.js                     ← GENERATED runtime for .dc.html documents — do not edit
-├── assets/church-logo.png         ← Logo used by index.html
-├── uploads/                       ← Additional uploaded imagery
+├── assets/church-logo.png         ← Published logo used by the site
+├── assets/guidance.md             ← Foundation reference guidance; not in Pages artifact
+├── uploads/Church Logo.png        ← Published legacy/uploaded image asset
 ├── scraps/                        ← Design references and screenshots, not shipped content
-└── .github/workflows/static.yml   ← GitHub Pages deploy
+└── .github/workflows/static.yml   ← GitHub Pages validation/staging/deploy workflow
 ```
+
+The staged Pages artifact currently contains `index.html`,
+`Gift Acceptance Policy.dc.html`, `support.js`, `assets/church-logo.png`, and
+`uploads/Church Logo.png`, plus `CNAME`, `robots.txt`, or `sitemap.xml` if one of
+those optional public files is added later. Repository instructions, Foundation
+reference guidance, CI configuration, spellcheck configuration, and `scraps/` are
+not copied into the Pages artifact.
 
 ### Conventions that matter
 
@@ -52,8 +67,10 @@ planned gifts), and publish the Foundation's governing documents.
 - Content about gifts, tax treatment, and Foundation policy is **substantive, not
   filler**. Do not reword, summarise, or "improve" it without an explicit request;
   when in doubt, leave the wording alone and ask.
-- Everything in the repo root is published. Do not commit drafts, personal data,
-  or donor information.
+- Only files explicitly staged by `.github/workflows/static.yml` are published to
+  GitHub Pages. When adding a new public page or asset, update the staging and
+  link-verification steps in the same change. Do not publish repository guidance,
+  drafts, personal data, donor information, or other internal material.
 
 ### Working agreement
 

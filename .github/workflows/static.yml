@@ -1,3 +1,8 @@
+# Adopted from Gogorichielab/.github Pages template at
+# 6599d2688f322bb63a01452e032777d7c0bf6eb9.
+# Repository adaptations: preserve the Spellcheck required check and config,
+# stage only the public static-site surface, validate local links, and keep
+# deployment gated behind successful checks and restricted to main.
 name: Validate and deploy static site
 
 on:
@@ -9,48 +14,172 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: "pages-${{ github.ref }}"
+  group: "pages-${{ github.workflow }}-${{ github.ref }}"
   cancel-in-progress: false
+
+env:
+  SITE_DIRECTORY: _site
 
 jobs:
   spellcheck:
     name: Spellcheck
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
 
+      - name: Install verified actionlint
+        working-directory: ${{ runner.temp }}
+        run: |
+          curl --fail --silent --show-error --location --retry 3 \
+            https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz \
+            -o actionlint.tar.gz
+          echo '8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8  actionlint.tar.gz' | sha256sum --check
+          tar --no-same-owner -xzf actionlint.tar.gz actionlint
+
+      - name: Validate workflow syntax
+        run: |
+          "$RUNNER_TEMP/actionlint" -shellcheck= -pyflakes= .github/workflows/static.yml
+
       - name: Spellcheck content
-        uses: rojopolis/spellcheck-github-actions@0.66.0
+        uses: rojopolis/spellcheck-github-actions@c1934c57e61c734261d7905b525486b12f8eb670 # 0.66.0
         with:
           config_path: .spellcheck.yml
 
+  build:
+    name: Build Pages artifact
+    needs: spellcheck
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Stage public site
+        run: |
+          set -euo pipefail
+          rm -rf "$SITE_DIRECTORY"
+          mkdir -p "$SITE_DIRECTORY/assets" "$SITE_DIRECTORY/uploads"
+          cp index.html "Gift Acceptance Policy.dc.html" support.js "$SITE_DIRECTORY/"
+          cp assets/church-logo.png "$SITE_DIRECTORY/assets/"
+          cp "uploads/Church Logo.png" "$SITE_DIRECTORY/uploads/"
+          for optional_file in CNAME robots.txt sitemap.xml; do
+            if [ -f "$optional_file" ]; then
+              cp "$optional_file" "$SITE_DIRECTORY/"
+            fi
+          done
+
+      - name: Verify staged site and relative links
+        run: |
+          set -euo pipefail
+          test -f "$SITE_DIRECTORY/index.html"
+          test -f "$SITE_DIRECTORY/Gift Acceptance Policy.dc.html"
+          test -f "$SITE_DIRECTORY/support.js"
+          test -f "$SITE_DIRECTORY/assets/church-logo.png"
+          test -f "$SITE_DIRECTORY/uploads/Church Logo.png"
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from urllib.parse import unquote, urlsplit
+
+          root = Path("_site").resolve()
+
+          class PageScan(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.ids = set()
+                  self.refs = []
+
+              def handle_starttag(self, tag, attrs):
+                  values = dict(attrs)
+                  if values.get("id"):
+                      self.ids.add(values["id"])
+                  if tag == "a" and values.get("name"):
+                      self.ids.add(values["name"])
+                  for key in ("href", "src"):
+                      if values.get(key):
+                          self.refs.append(values[key])
+
+          scans = {}
+          for page in root.rglob("*.html"):
+              scan = PageScan()
+              scan.feed(page.read_text(encoding="utf-8"))
+              scans[page.resolve()] = scan
+
+          errors = []
+          checked = 0
+          for source, scan in scans.items():
+              for ref in scan.refs:
+                  parts = urlsplit(ref)
+                  if parts.scheme or ref.startswith("//"):
+                      continue
+
+                  path_text = unquote(parts.path)
+                  if not path_text:
+                      target = source
+                  elif path_text.startswith("/"):
+                      target = root / path_text.lstrip("/")
+                  else:
+                      target = source.parent / path_text
+                  target = target.resolve()
+
+                  if target != root and root not in target.parents:
+                      errors.append(f"{source.relative_to(root)}: link escapes staged site: {ref}")
+                      continue
+                  if target.is_dir():
+                      target = target / "index.html"
+                  if not target.exists():
+                      errors.append(f"{source.relative_to(root)}: missing target: {ref}")
+                      continue
+
+                  checked += 1
+                  if parts.fragment and target.suffix.lower() == ".html":
+                      target_scan = scans.get(target.resolve())
+                      fragment = unquote(parts.fragment)
+                      if target_scan is None or fragment not in target_scan.ids:
+                          errors.append(
+                              f"{source.relative_to(root)}: missing fragment #{fragment} in "
+                              f"{target.relative_to(root)}"
+                          )
+
+          if errors:
+              raise SystemExit("\n".join(errors))
+          print(f"Verified {checked} local HTML links/assets across {len(scans)} pages")
+          PY
+
+      - name: Upload Pages artifact
+        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
+        with:
+          path: ${{ env.SITE_DIRECTORY }}
+
   deploy:
     name: Deploy to GitHub Pages
-    if: github.event_name != 'pull_request'
-    needs: spellcheck
+    if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages-production
+      cancel-in-progress: false
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v7
-
       - name: Setup Pages
-        uses: actions/configure-pages@v6
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v5
-        with:
-          path: '.'
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5
