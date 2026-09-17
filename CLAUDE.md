@@ -27,8 +27,9 @@ non-technical, many on phones.
 - **Also published:** `Gift Acceptance Policy.dc.html` (rendered by the generated
   `support.js` runtime — **never hand-edit `support.js`**).
 - **Deploy:** GitHub Pages via `.github/workflows/static.yml` on push to `main`.
-  The entire repo root is uploaded, so repo paths are live URLs.
-- **`scraps/`** holds design references, not shipped content.
+  Only the files that workflow explicitly stages are published — dropping a file
+  at the repo root does **not** put it on the site. Add new public files to the
+  staging and link-verification steps in the same change.
 
 ### Non-negotiables
 
