@@ -25,7 +25,11 @@ non-technical, many on phones.
   backend, no dependencies.
 - **Entry point:** `index.html` is the whole site.
 - **Also published:** `Gift Acceptance Policy.dc.html` (rendered by the generated
-  `support.js` runtime — **never hand-edit `support.js`**).
+  `support.js` runtime — **never hand-edit `support.js`**), the church logo, and
+  the `favicon.ico` / `apple-touch-icon.png` pair.
+- **Public address:** `stpeterlutheranfoundation.org`, set by the `CNAME` file;
+  `www.` redirects to it. Changing `CNAME` changes every published URL, so it is
+  a breaking change.
 - **Deploy:** GitHub Pages via `.github/workflows/static.yml` on push to `main`.
   Only the files that workflow explicitly stages are published — dropping a file
   at the repo root does **not** put it on the site. Add new public files to the
@@ -39,8 +43,11 @@ non-technical, many on phones.
   unless a restyle is the explicit request.
 - Do not reword giving, tax, or policy content without being asked. It is
   substantive text, not placeholder.
-- Nothing donor-identifying or draft-quality gets committed; everything here is
-  published.
+- Nothing donor-identifying or draft-quality gets committed. The repository is
+  public, so committing a file discloses it whether or not Pages serves it.
+- CI runs a spellcheck over every `*.md` and `*.html` file. New prose wording
+  fails the build until the term is added to `.wordlist.txt` in the same change;
+  code spans, fenced blocks, `<script>` and `<style>` are ignored.
 - Verify changes by opening the page at phone and laptop widths.
 
 ---
