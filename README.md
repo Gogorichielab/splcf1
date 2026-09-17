@@ -20,6 +20,8 @@ The [`.wordlist.txt`](.wordlist.txt) file contains project-specific words, names
 
 - `index.html` — Main website page.
 - `support.js` — JavaScript supporting the website.
+- `favicon.ico` — Browser tab icon, cropped from the church logo.
+- `apple-touch-icon.png` — Home-screen icon for phones and tablets, same crop.
 - `assets/` — Website assets and Foundation reference material.
 - `assets/guidance.md` — Foundation guidance and organizational reference information.
 - `AGENTS.md` — Instructions for AI agents working in the repository.

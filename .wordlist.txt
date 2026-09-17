@@ -10,6 +10,7 @@ DAFs
 DietrichGebert
 disfluencies
 DNS
+favicon
 Galligan
 Garamond
 Gilberts

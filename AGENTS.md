@@ -43,6 +43,8 @@ planned gifts), and publish the Foundation's governing documents.
 ├── index.html                     ← The entire site (inline CSS, hand-authored)
 ├── Gift Acceptance Policy.dc.html ← Published policy document page
 ├── support.js                     ← GENERATED runtime for .dc.html documents — do not edit
+├── favicon.ico                    ← Browser tab icon, 16/32/48, cropped from the church logo
+├── apple-touch-icon.png           ← 180px home-screen icon, same crop
 ├── assets/church-logo.png         ← Published logo used by the site
 ├── assets/guidance.md             ← Foundation reference guidance; not in Pages artifact
 ├── uploads/Church Logo.png        ← Published legacy/uploaded image asset
@@ -51,8 +53,9 @@ planned gifts), and publish the Foundation's governing documents.
 ```
 
 The staged Pages artifact currently contains `index.html`,
-`Gift Acceptance Policy.dc.html`, `support.js`, `assets/church-logo.png`,
-`uploads/Church Logo.png`, and `CNAME`. A `robots.txt` or `sitemap.xml` is staged
+`Gift Acceptance Policy.dc.html`, `support.js`, `favicon.ico`,
+`apple-touch-icon.png`, `assets/church-logo.png`, `uploads/Church Logo.png`, and
+`CNAME`. A `robots.txt` or `sitemap.xml` is staged
 too if either is added later. Repository instructions, Foundation reference
 guidance, CI configuration, spellcheck configuration, and `scraps/` are not copied
 into the Pages artifact.
