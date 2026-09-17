@@ -1,0 +1,3 @@
+# Compiled aspell dictionary that PySpelling writes when the Spellcheck job's
+# config is run locally. Regenerated on every run; never part of the source.
+dictionary.dic
