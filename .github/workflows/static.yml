@@ -68,6 +68,7 @@ jobs:
           rm -rf "$SITE_DIRECTORY"
           mkdir -p "$SITE_DIRECTORY/assets" "$SITE_DIRECTORY/uploads"
           cp index.html "Gift Acceptance Policy.dc.html" support.js "$SITE_DIRECTORY/"
+          cp favicon.ico apple-touch-icon.png "$SITE_DIRECTORY/"
           cp assets/church-logo.png "$SITE_DIRECTORY/assets/"
           cp "uploads/Church Logo.png" "$SITE_DIRECTORY/uploads/"
           for optional_file in CNAME robots.txt sitemap.xml; do
@@ -82,6 +83,8 @@ jobs:
           test -f "$SITE_DIRECTORY/index.html"
           test -f "$SITE_DIRECTORY/Gift Acceptance Policy.dc.html"
           test -f "$SITE_DIRECTORY/support.js"
+          test -f "$SITE_DIRECTORY/favicon.ico"
+          test -f "$SITE_DIRECTORY/apple-touch-icon.png"
           test -f "$SITE_DIRECTORY/assets/church-logo.png"
           test -f "$SITE_DIRECTORY/uploads/Church Logo.png"
           python - <<'PY'

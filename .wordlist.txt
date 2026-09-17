@@ -7,9 +7,11 @@ coreyhaines
 CRATs
 CRUTs
 DAFs
+Dependabot
 DietrichGebert
 disfluencies
 DNS
+favicon
 Galligan
 Garamond
 Gilberts

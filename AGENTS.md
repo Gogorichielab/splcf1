@@ -30,6 +30,9 @@ planned gifts), and publish the Foundation's governing documents.
   `stpeterlutheranfoundation.org`, set by the `CNAME` file at the repository root.
   `www.stpeterlutheranfoundation.org` redirects to it. See **Custom domain** below
   before changing either.
+- **Dependency updates:** `.github/dependabot.yml` batches GitHub Actions bumps
+  into one grouped pull request per month; security advisories open immediately
+  and ignore that cadence. Its commits land as `ci(deps): ...`.
 - **Pages workflow source:** adapted from the Gogorichielab organization Pages
   template at commit `6599d2688f322bb63a01452e032777d7c0bf6eb9`. Repository-specific
   adaptations preserve the `Spellcheck` check and `.spellcheck.yml`, stage this
@@ -43,19 +46,42 @@ planned gifts), and publish the Foundation's governing documents.
 ├── index.html                     ← The entire site (inline CSS, hand-authored)
 ├── Gift Acceptance Policy.dc.html ← Published policy document page
 ├── support.js                     ← GENERATED runtime for .dc.html documents — do not edit
-├── assets/church-logo.png         ← Published logo used by the site
+├── favicon.ico                    ← Browser tab icon, 16/32/48, cropped from the church logo
+├── apple-touch-icon.png           ← 180px home-screen icon, same crop
+├── CNAME                          ← The one hostname Pages answers on
+├── assets/church-logo.png         ← Published logo used by both pages
 ├── assets/guidance.md             ← Foundation reference guidance; not in Pages artifact
-├── uploads/Church Logo.png        ← Published legacy/uploaded image asset
-├── scraps/                        ← Design references and screenshots, not shipped content
-└── .github/workflows/static.yml   ← GitHub Pages validation/staging/deploy workflow
+├── uploads/Church Logo.png        ← Published legacy image; no page currently links it
+├── AGENTS.md, CLAUDE.md, README.md ← Repository guidance; not in Pages artifact
+├── .spellcheck.yml                ← PySpelling config for the Spellcheck check
+├── .wordlist.txt                  ← Accepted project terms for that check
+├── .github/workflows/static.yml   ← GitHub Pages validation/staging/deploy workflow
+└── .github/dependabot.yml         ← Monthly grouped GitHub Actions updates
 ```
 
 The staged Pages artifact currently contains `index.html`,
-`Gift Acceptance Policy.dc.html`, `support.js`, `assets/church-logo.png`,
-`uploads/Church Logo.png`, and `CNAME`. A `robots.txt` or `sitemap.xml` is staged
+`Gift Acceptance Policy.dc.html`, `support.js`, `favicon.ico`,
+`apple-touch-icon.png`, `assets/church-logo.png`, `uploads/Church Logo.png`, and
+`CNAME`. A `robots.txt` or `sitemap.xml` is staged
 too if either is added later. Repository instructions, Foundation reference
-guidance, CI configuration, spellcheck configuration, and `scraps/` are not copied
-into the Pages artifact.
+guidance, CI configuration, and spellcheck configuration are not copied into the
+Pages artifact.
+
+### Checks
+
+`.github/workflows/static.yml` runs three jobs, each gating the next:
+
+1. **Spellcheck** — lints the workflow with `actionlint`, then runs PySpelling over
+   every `*.md` and `*.html` file per `.spellcheck.yml`. Fenced blocks, inline
+   code, `<script>`, and `<style>` are ignored; all other prose is checked against
+   `.wordlist.txt`. New terminology fails the build until it is added there, one
+   word per line, so add it in the same change that introduces the word.
+2. **Build Pages artifact** — stages the public files into `_site`, asserts each
+   one is present, then walks every local `href`/`src` in the staged HTML and
+   fails on a missing file or a missing `#fragment`.
+3. **Deploy to GitHub Pages** — runs only for a push to the default branch.
+
+Pull requests run jobs 1 and 2; only a push to `main` uploads and deploys.
 
 ### Custom domain
 
@@ -95,8 +121,10 @@ domain on GitHub. It is not required for the site to work.
 - `index.html` carries its styling inline. That is intentional for a
   zero-build site — keep edits local and readable rather than extracting a
   design system.
-- `support.js` is generated (`// GENERATED from dc-runtime/src/*.ts — do not edit`).
-  Never hand-edit it; if it needs to change, that change belongs upstream.
+- `support.js` is generated. Its header names both the source
+  (`dc-runtime/src/*.ts`) and the rebuild command (`cd dc-runtime && bun run
+  build`); that upstream project does not live in this repository. Never
+  hand-edit `support.js` — the change belongs upstream.
 - Typography is Cormorant Garamond for headings; keep the existing typographic
   scale and colour palette unless a restyle is explicitly requested. A previous
   colour-scheme change was reverted — do not reintroduce one on your own
