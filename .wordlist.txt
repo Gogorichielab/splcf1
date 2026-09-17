@@ -1,6 +1,7 @@
 backend
 biblically
 bundler
+Cloudflare
 copywriting
 coreyhaines
 CRATs
@@ -8,12 +9,14 @@ CRUTs
 DAFs
 DietrichGebert
 disfluencies
+DNS
 Galligan
 Garamond
 Gilberts
 github
 GitHub
 Gogorichielab
+hostname
 html
 https
 LCMS
@@ -22,6 +25,7 @@ Lutheran
 marketingskills
 md
 Milash
+nameservers
 negotiables
 NFP
 npm
@@ -30,11 +34,13 @@ Officio
 officio
 Pemoller
 Pingree
+proxied
 PySpelling
 README
 Reinking
 repo
 repo's
+selectable
 seo
 SEO
 Snetsinger

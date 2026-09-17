@@ -26,6 +26,10 @@ planned gifts), and publish the Foundation's governing documents.
   local HTML links/assets, uploads that directory as the Pages artifact, and
   deploys only after the required checks pass. Pull requests run read-only checks
   and do not receive Pages write credentials.
+- **Public address:** the site is served from the Foundation's own apex domain,
+  `stpeterlutheranfoundation.org`, set by the `CNAME` file at the repository root.
+  `www.stpeterlutheranfoundation.org` redirects to it. See **Custom domain** below
+  before changing either.
 - **Pages workflow source:** adapted from the Gogorichielab organization Pages
   template at commit `6599d2688f322bb63a01452e032777d7c0bf6eb9`. Repository-specific
   adaptations preserve the `Spellcheck` check and `.spellcheck.yml`, stage this
@@ -47,11 +51,44 @@ planned gifts), and publish the Foundation's governing documents.
 ```
 
 The staged Pages artifact currently contains `index.html`,
-`Gift Acceptance Policy.dc.html`, `support.js`, `assets/church-logo.png`, and
-`uploads/Church Logo.png`, plus `CNAME`, `robots.txt`, or `sitemap.xml` if one of
-those optional public files is added later. Repository instructions, Foundation
-reference guidance, CI configuration, spellcheck configuration, and `scraps/` are
-not copied into the Pages artifact.
+`Gift Acceptance Policy.dc.html`, `support.js`, `assets/church-logo.png`,
+`uploads/Church Logo.png`, and `CNAME`. A `robots.txt` or `sitemap.xml` is staged
+too if either is added later. Repository instructions, Foundation reference
+guidance, CI configuration, spellcheck configuration, and `scraps/` are not copied
+into the Pages artifact.
+
+### Custom domain
+
+The `CNAME` file holds the single hostname Pages answers on. Changing or deleting
+it changes every published URL, so treat it as a breaking change under the commit
+rules below. The staging step in `.github/workflows/static.yml` already copies
+`CNAME` when it exists — adding it needed no workflow edit.
+
+The matching DNS records live at the registrar, outside this repository. For the
+apex domain, GitHub documents four `A` records and four `AAAA` records on `@`:
+
+```
+A     @    185.199.108.153
+A     @    185.199.109.153
+A     @    185.199.110.153
+A     @    185.199.111.153
+AAAA  @    2606:50c0:8000::153
+AAAA  @    2606:50c0:8001::153
+AAAA  @    2606:50c0:8002::153
+AAAA  @    2606:50c0:8003::153
+CNAME www  gogorichielab.github.io
+```
+
+This domain is on Cloudflare nameservers. Every record above must be set to
+**DNS only** (the grey cloud), never proxied. A proxied record blocks the
+certificate challenge, and the `Enforce HTTPS` option in **Settings → Pages**
+stays unavailable or the certificate fails to issue. That option can also take up
+to 24 hours to become selectable after DNS first resolves, which is expected and
+not a failure.
+
+Optionally, an organization-level verification `TXT` record
+(`_github-pages-challenge-Gogorichielab`) prevents anyone else claiming this
+domain on GitHub. It is not required for the site to work.
 
 ### Conventions that matter
 
