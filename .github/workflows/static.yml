@@ -70,7 +70,8 @@ jobs:
           cp index.html "Gift Acceptance Policy.dc.html" support.js "$SITE_DIRECTORY/"
           cp favicon.ico apple-touch-icon.png "$SITE_DIRECTORY/"
           cp assets/church-logo.png "$SITE_DIRECTORY/assets/"
-          cp "uploads/Church Logo.png" "$SITE_DIRECTORY/uploads/"
+          # Legacy published path; same image, staged from the single source file.
+          cp assets/church-logo.png "$SITE_DIRECTORY/uploads/Church Logo.png"
           for optional_file in CNAME robots.txt sitemap.xml; do
             if [ -f "$optional_file" ]; then
               cp "$optional_file" "$SITE_DIRECTORY/"

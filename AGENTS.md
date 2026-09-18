@@ -51,7 +51,6 @@ planned gifts), and publish the Foundation's governing documents.
 ├── CNAME                          ← The one hostname Pages answers on
 ├── assets/church-logo.png         ← Published logo used by both pages
 ├── assets/guidance.md             ← Foundation reference guidance; not in Pages artifact
-├── uploads/Church Logo.png        ← Published legacy image; no page currently links it
 ├── AGENTS.md, CLAUDE.md, README.md ← Repository guidance; not in Pages artifact
 ├── .spellcheck.yml                ← PySpelling config for the Spellcheck check
 ├── .wordlist.txt                  ← Accepted project terms for that check
@@ -61,9 +60,11 @@ planned gifts), and publish the Foundation's governing documents.
 
 The staged Pages artifact currently contains `index.html`,
 `Gift Acceptance Policy.dc.html`, `support.js`, `favicon.ico`,
-`apple-touch-icon.png`, `assets/church-logo.png`, `uploads/Church Logo.png`, and
-`CNAME`. A `robots.txt` or `sitemap.xml` is staged
-too if either is added later. Repository instructions, Foundation reference
+`apple-touch-icon.png`, `assets/church-logo.png`, `CNAME`, and
+`uploads/Church Logo.png` — a legacy published path that no page links, copied
+from `assets/church-logo.png` so the image lives in the repository only once.
+A `robots.txt` or `sitemap.xml` is staged too if either is
+added later. Repository instructions, Foundation reference
 guidance, CI configuration, and spellcheck configuration are not copied into the
 Pages artifact.
 
