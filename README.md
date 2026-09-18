@@ -27,6 +27,7 @@ The [`.wordlist.txt`](.wordlist.txt) file contains project-specific words, names
 ## Key Files
 
 - `index.html` — Main website page.
+- `404.html` — Not-found page shown for any address that does not exist.
 - `Gift Acceptance Policy.dc.html` — Published Gift Acceptance Policy page.
 - `support.js` — Generated runtime that renders the policy page. Never edit it by hand; it is rebuilt from an upstream project.
 - `favicon.ico` — Browser tab icon, cropped from the church logo.
