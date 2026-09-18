@@ -1,0 +1,10 @@
+# St. Peter Lutheran Church Foundation - stpeterlutheranfoundation.org
+#
+# Everything published here is public Foundation information meant to be found
+# by anyone considering a gift, so every crawler is welcome on every path.
+# There is nothing donor-identifying or private on this site to fence off.
+
+User-agent: *
+Disallow:
+
+Sitemap: https://stpeterlutheranfoundation.org/sitemap.xml

@@ -27,10 +27,13 @@ The [`.wordlist.txt`](.wordlist.txt) file contains project-specific words, names
 ## Key Files
 
 - `index.html` — Main website page.
+- `404.html` — Not-found page shown for any address that does not exist.
 - `Gift Acceptance Policy.dc.html` — Published Gift Acceptance Policy page.
 - `support.js` — Generated runtime that renders the policy page. Never edit it by hand; it is rebuilt from an upstream project.
 - `favicon.ico` — Browser tab icon, cropped from the church logo.
 - `apple-touch-icon.png` — Home-screen icon for phones and tablets, same crop.
+- `robots.txt` — Crawler instructions; allows everything and points at the sitemap.
+- `sitemap.xml` — The published pages, for search engines. Update it when a page is added or changed.
 - `assets/` — Website assets and Foundation reference material.
 - `assets/guidance.md` — Foundation guidance and organizational reference information.
 - `AGENTS.md` — Instructions for AI agents working in the repository.

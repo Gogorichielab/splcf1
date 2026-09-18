@@ -44,10 +44,13 @@ planned gifts), and publish the Foundation's governing documents.
 ```
 /
 ├── index.html                     ← The entire site (inline CSS, hand-authored)
+├── 404.html                       ← Not-found page; standalone, links by root-relative path
 ├── Gift Acceptance Policy.dc.html ← Published policy document page
 ├── support.js                     ← GENERATED runtime for .dc.html documents — do not edit
 ├── favicon.ico                    ← Browser tab icon, 16/32/48, cropped from the church logo
 ├── apple-touch-icon.png           ← 180px home-screen icon, same crop
+├── robots.txt                     ← Allows every crawler; points at the sitemap
+├── sitemap.xml                    ← The two real pages; update lastmod when they change
 ├── CNAME                          ← The one hostname Pages answers on
 ├── assets/church-logo.png         ← Published logo used by both pages
 ├── assets/guidance.md             ← Foundation reference guidance; not in Pages artifact
@@ -58,15 +61,21 @@ planned gifts), and publish the Foundation's governing documents.
 └── .github/dependabot.yml         ← Monthly grouped GitHub Actions updates
 ```
 
-The staged Pages artifact currently contains `index.html`,
+The staged Pages artifact currently contains `index.html`, `404.html`,
 `Gift Acceptance Policy.dc.html`, `support.js`, `favicon.ico`,
-`apple-touch-icon.png`, `assets/church-logo.png`, `CNAME`, and
-`uploads/Church Logo.png` — a legacy published path that no page links, copied
-from `assets/church-logo.png` so the image lives in the repository only once.
-A `robots.txt` or `sitemap.xml` is staged too if either is
-added later. Repository instructions, Foundation reference
-guidance, CI configuration, and spellcheck configuration are not copied into the
-Pages artifact.
+`apple-touch-icon.png`, `robots.txt`, `sitemap.xml`, `assets/church-logo.png`,
+`CNAME`, and `uploads/Church Logo.png` — a legacy published path that no page
+links, copied from `assets/church-logo.png` so the image lives in the repository
+only once. Repository instructions, Foundation reference guidance, CI
+configuration, and spellcheck configuration are not copied into the Pages
+artifact.
+
+`404.html` is served for any address that does not exist, including deep ones
+like `/giving/old/page.html`, so every link and image on it is written
+root-relative (`/`, `/#give`) rather than relative. It is deliberately
+standalone: it does not load `support.js`, so nothing can keep the error page
+itself from rendering. Adding a page to the site means adding it to
+`sitemap.xml` as well.
 
 ### Checks
 

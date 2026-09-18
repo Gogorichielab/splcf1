@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page Not Found &mdash; St. Peter Lutheran Church Foundation</title>
+<meta name="description" content="That page could not be found on the St. Peter Lutheran Church Foundation site.">
+<meta name="robots" content="noindex, follow">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Standalone page: it must render correctly when the server hands it back for
+     any missing path, so it carries its own styles and links to the site by
+     root-relative paths rather than relative ones. */
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Source Sans 3', -apple-system, sans-serif;
+    color: #2c2823;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+    background: #faf6ee;
+    background-image: radial-gradient(120% 95% at 50% 0%, #fdfaf3 0%, #faf6ee 42%, #f3ebdb 100%);
+    background-repeat: no-repeat;
+  }
+  ::selection { background: #0a6f97; color: #fff; }
+
+  :focus-visible { outline: 3px solid #0a4f6d; outline-offset: 2px; box-shadow: 0 0 0 2px #fdfaf3; }
+  @media (forced-colors: active) { :focus-visible { outline-color: Highlight; } }
+
+  .spf-wrap { flex: 1 0 auto; max-width: 720px; margin: 0 auto; padding: 72px 26px 80px; text-align: center; }
+  .spf-mark { display: inline-block; margin-bottom: 34px; }
+  .spf-mark img { height: 64px; width: auto; display: block; }
+
+  /* Flex, not inline-flex: this must sit on its own line below the logo. */
+  .spf-eyebrow { display: flex; align-items: center; justify-content: center; gap: 13px; margin-bottom: 22px; }
+  .spf-eyebrow span.rule { height: 1px; width: 34px; background: #c9a35e; }
+  .spf-eyebrow span.label { font-size: 12.5px; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: #8a5a2b; }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: clamp(38px, 6.4vw, 66px);
+    line-height: 1.06;
+    letter-spacing: -0.01em;
+    margin: 0 auto 20px;
+    max-width: 16ch;
+    color: #221f1a;
+    text-wrap: balance;
+  }
+  .spf-lede { font-size: clamp(16.5px, 2vw, 19px); line-height: 1.68; color: #574e43; margin: 0 auto 34px; max-width: 52ch; }
+
+  .spf-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 44px; }
+  .spf-btn { text-decoration: none; padding: 14px 30px; border-radius: 999px; font-size: 16px; font-weight: 600; }
+  .spf-btn-primary { color: #fff; background: #0a6f97; box-shadow: 0 4px 16px rgba(10,111,151,0.26); }
+  .spf-btn-primary:hover { background: #084f6d; }
+  .spf-btn-ghost { color: #0a5a7d; background: transparent; border: 1px solid #c6bca9; padding: 14px 28px; }
+  .spf-btn-ghost:hover { border-color: #0a6f97; background: rgba(10,111,151,0.05); }
+
+  .spf-elsewhere { border-top: 1px solid #e3d9c8; padding-top: 30px; }
+  .spf-elsewhere h2 { font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #8a5a2b; margin: 0 0 16px; }
+  .spf-links { display: flex; gap: 12px 26px; justify-content: center; flex-wrap: wrap; }
+  .spf-links a { text-decoration: none; color: #4a4339; font-size: 15.5px; font-weight: 600; }
+  .spf-links a:hover { color: #0a6f97; }
+
+  footer { flex-shrink: 0; background: #20302f; color: #a49a8b; font-size: 13.5px; text-align: center; padding: 26px 26px 30px; }
+  footer a { color: #c6bfb1; text-decoration: underline; text-underline-offset: 3px; }
+  footer a:hover { color: #fff; }
+
+  @media (max-width: 420px) {
+    .spf-wrap { padding-left: 16px; padding-right: 16px; padding-top: 56px; }
+    .spf-mark img { height: 52px; }
+    .spf-eyebrow span.rule { width: 20px; }
+    .spf-btn, .spf-btn-ghost { width: 100%; }
+    footer { padding-left: 16px; padding-right: 16px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+  <main class="spf-wrap">
+    <a class="spf-mark" href="/">
+      <img src="/assets/church-logo.png" alt="St. Peter Evangelical Lutheran Church of Gilberts">
+    </a>
+
+    <div class="spf-eyebrow">
+      <span class="rule"></span>
+      <span class="label">Page Not Found</span>
+      <span class="rule"></span>
+    </div>
+
+    <h1>We could not find that page</h1>
+
+    <p class="spf-lede">The page you were looking for may have been moved or renamed, or the address may have a small mistake in it. Everything about the Foundation is still here &mdash; the links below will take you back to it.</p>
+
+    <div class="spf-actions">
+      <a class="spf-btn spf-btn-primary" href="/">Return to the home page</a>
+      <a class="spf-btn spf-btn-ghost" href="/#give">Ways to Give</a>
+    </div>
+
+    <nav class="spf-elsewhere" aria-labelledby="spf-elsewhere-heading">
+      <h2 id="spf-elsewhere-heading">Or go straight to</h2>
+      <div class="spf-links">
+        <a href="/#mission">Our Mission</a>
+        <a href="/#why">Why Give</a>
+        <a href="/#support">What We Support</a>
+        <a href="/#board">Board</a>
+        <a href="/Gift%20Acceptance%20Policy.dc.html">Gift Acceptance Policy</a>
+        <a href="/#contact">Contact</a>
+      </div>
+    </nav>
+  </main>
+
+  <footer>
+    St.&nbsp;Peter Evangelical Lutheran Church Foundation, NFP &middot; An Illinois Not-For-Profit Corporation<br>
+    Still lost? Write to <a href="mailto:tech@stpeterlutheran.org">tech@stpeterlutheran.org</a>.
+  </footer>
+
+</body>
+</html>
